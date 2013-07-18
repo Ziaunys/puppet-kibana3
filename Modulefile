@@ -1,0 +1,8 @@
+name    'puppet-kibana3'
+version '0.1.0'
+source 'https://github.com/Ziaunys/puppet-kibana3'
+author 'Ziaunys'
+license 'Apache License, Version 2.0'
+summary 'Module for managing and configuring kibana3'
+description 'Module for managing and configuring kibana3'
+project_page 'https://github.com/Ziaunys/puppet-kibana3'
