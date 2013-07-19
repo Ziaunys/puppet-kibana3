@@ -36,21 +36,33 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 class kibana3(
-    $ensure            = $kibana3::params::ensure,
     $autoupgrade       = $kibana3::params::autoupgrade,
-    $status            = $kibana3::params::status,
-    $restart_on_change = $kibana3::params::restart_on_change,
+    $ensure            = $kibana3::params::ensure,
+    $package           = $kibana3::params::package,
     $proxyserv         = $kibana3::params::proxyserv,
+    $restart_on_change = $kibana3::params::restart_on_change,
+    $status            = $kibana3::params::status,
     $version           = false,) inherits kibana3::params {
 
-    if ($proxyserv == 'apache') {
-        class { 'apache':
-            
-        }
+    if ! ($proxyserv in [ 'apache', 'nginx', 'node' ]) {
+        fail("\"${proxyserv}\" is not supported")
+    }
+    elseif ($proxyserv == undef) {
+        fail("param: proxyserv must be defined")
+    }
+    else {
+        include $proxyserv
+        Class["${proxyserv}"] -> Class['kibana3']
     }
 
+    package { $package: ensure => $ensure }
+
+
+    }
+
+
     if ! ($ensure in [ 'present', 'absent' ]) {
-        fail("\"${ensure}\" isi not a valid ensure parameter")
+        fail("\"${ensure}\" is not a valid ensure parameter")
     }
 
     validate_bool($autoupgrade)
