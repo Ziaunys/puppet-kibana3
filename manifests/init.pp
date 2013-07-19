@@ -29,13 +29,30 @@
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Author Name <eric.zounes@sysblogd.com>
 #
 # === Copyright
 #
 # Copyright 2013 Your name here, unless otherwise noted.
 #
-class kibana3 {
+class kibana3(
+    $ensure            = $kibana3::params::ensure,
+    $autoupgrade       = $kibana3::params::autoupgrade,
+    $status            = $kibana3::params::status,
+    $restart_on_change = $kibana3::params::restart_on_change,
+    $proxyserv         = $kibana3::params::proxyserv,
+    $version           = false,) inherits kibana3::params {
 
+    if ($proxyserv == 'apache') {
+        class { 'apache':
+            
+        }
+    }
 
-}
+    if ! ($ensure in [ 'present', 'absent' ]) {
+        fail("\"${ensure}\" isi not a valid ensure parameter")
+    }
+
+    validate_bool($autoupgrade)
+    }
+
