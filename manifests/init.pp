@@ -40,8 +40,12 @@ class kibana3(
     $ensure            = $kibana3::params::ensure,
     $package           = $kibana3::params::package,
     $proxyserv         = $kibana3::params::proxyserv,
+    $proxyport         = $kibana3::params::proxyport,
     $restart_on_change = $kibana3::params::restart_on_change,
+    $servername        = $kibana3::params::servername,
+    $serverport        = $kibana3::params::serverport,
     $status            = $kibana3::params::status,
+    $vhost_path,
     $version           = false,) inherits kibana3::params {
 
     if ! ($proxyserv in [ 'apache', 'nginx', 'node' ]) {
@@ -51,15 +55,12 @@ class kibana3(
         fail("param: proxyserv must be defined")
     }
     else {
-        include $proxyserv
-        Class["${proxyserv}"] -> Class['kibana3']
+        include kibana3::proxy
     }
 
     package { $package: ensure => $ensure }
 
-
     }
-
 
     if ! ($ensure in [ 'present', 'absent' ]) {
         fail("\"${ensure}\" is not a valid ensure parameter")
