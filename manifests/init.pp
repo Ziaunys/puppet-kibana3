@@ -41,8 +41,9 @@ class kibana3(
     $ensure            = $kibana3::params::ensure,
     $es_server,
     $es_port           = $kibana3::params::es_port,
+    $is_proxy          = $kibana3::params::is_proxy,
     $package           = $kibana3::params::package,
-    $proxy_name,
+    $proxy_name,       = $kibana3::params::proxy_name
     $proxy_port        = $kibana3::params::server_port,
     $webserver         = $kibana3::params::webserver,
     $restart_on_change = $kibana3::params::restart_on_change,
@@ -59,7 +60,7 @@ class kibana3(
         fail("param: webserver must be defined")
     }
     else {
-        include kibana3::proxy
+        include kibana3::webserver
     }
 
 
