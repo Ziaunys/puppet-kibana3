@@ -8,7 +8,15 @@ class kibana3::params {
 
   $restart_on_change = false
 
-  $proxyserv = undef
+  $webserver = undef
+
+  # proxy defaults
+
+  $proxy_name = undef
+
+  $proxy_port = 80 
+
+  $es_port = 9200
 
   case $::operatingsystem {
     'CentOS', 'Fedora', 'Scientific', 'OracleLinux', 'Amazon', 'RedHat': {

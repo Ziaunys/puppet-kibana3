@@ -37,28 +37,31 @@
 #
 class kibana3(
     $autoupgrade       = $kibana3::params::autoupgrade,
+    $approot           = $kibana3::params::approot,
     $ensure            = $kibana3::params::ensure,
+    $es_server,
+    $es_port           = $kibana3::params::es_port,
     $package           = $kibana3::params::package,
-    $proxyserv         = $kibana3::params::proxyserv,
-    $proxyport         = $kibana3::params::proxyport,
+    $proxy_name,
+    $proxy_port        = $kibana3::params::server_port,
+    $webserver         = $kibana3::params::webserver,
     $restart_on_change = $kibana3::params::restart_on_change,
-    $servername        = $kibana3::params::servername,
-    $serverport        = $kibana3::params::serverport,
     $status            = $kibana3::params::status,
     $vhost_path,
     $version           = false,) inherits kibana3::params {
 
+    package { $package: ensure => $ensure }
+
     if ! ($proxyserv in [ 'apache', 'nginx', 'node' ]) {
         fail("\"${proxyserv}\" is not supported")
     }
-    elseif ($proxyserv == undef) {
-        fail("param: proxyserv must be defined")
+    elseif ($webserver == undef) {
+        fail("param: webserver must be defined")
     }
     else {
         include kibana3::proxy
     }
 
-    package { $package: ensure => $ensure }
 
     }
 
