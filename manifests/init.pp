@@ -39,7 +39,7 @@ class kibana3(
     $autoupgrade       = $kibana3::params::autoupgrade,
     $approot           = $kibana3::params::approot,
     $ensure            = $kibana3::params::ensure,
-    $es_server,
+    $es_vip,
     $es_port           = $kibana3::params::es_port,
     $is_proxy          = $kibana3::params::is_proxy,
     $package           = $kibana3::params::package,
@@ -69,7 +69,6 @@ class kibana3(
     if ! ($ensure in [ 'present', 'absent' ]) {
         fail("\"${ensure}\" is not a valid ensure parameter")
     }
-
     validate_bool($autoupgrade)
     }
 
