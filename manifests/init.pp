@@ -63,9 +63,9 @@ class kibana3(
     if ($es_vip == undef) {
         $es_vip = $hostname
     }
- 
+
     if ! ($webserver in [ 'apache', 'nginx', 'node' ]) {
-        fail("\"${proxyserv}\" is not supported")
+        fail("\"${webserver}\" is not supported")
     }
     elsif ($webserver == undef) {
         fail("param: webserver must be defined")
