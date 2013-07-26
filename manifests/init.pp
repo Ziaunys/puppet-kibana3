@@ -43,32 +43,32 @@ class kibana3(
     $es_port           = $kibana3::params::es_port,
     $is_proxy          = $kibana3::params::is_proxy,
     $package           = $kibana3::params::package,
-    $proxy_name,       = $kibana3::params::proxy_name
+    $proxy_name        = $kibana3::params::proxy_name,
     $proxy_port        = $kibana3::params::server_port,
     $webserver         = $kibana3::params::webserver,
     $restart_on_change = $kibana3::params::restart_on_change,
     $status            = $kibana3::params::status,
-    $vhost_path,
+    $vhost_path        = $kibana3::params::vhost_path,
     $version           = false,) inherits kibana3::params {
 
     package { $package: ensure => $ensure }
 
-    if ! ($proxyserv in [ 'apache', 'nginx', 'node' ]) {
+    if ($es_vip == undef) {
+        $es_vip = $hostname
+    }
+ 
+    if ! ($webserver in [ 'apache', 'nginx', 'node' ]) {
         fail("\"${proxyserv}\" is not supported")
     }
-    elseif ($webserver == undef) {
+    elsif ($webserver == undef) {
         fail("param: webserver must be defined")
     }
     else {
-        include kibana3::webserver
-    }
-
-
+       class { 'kibana3::webserver': vhost_path => $vhost_path }
     }
 
     if ! ($ensure in [ 'present', 'absent' ]) {
         fail("\"${ensure}\" is not a valid ensure parameter")
     }
-    validate_bool($autoupgrade)
-    }
+}
 
