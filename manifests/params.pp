@@ -6,8 +6,6 @@ class kibana3::params {
 
   $status = 'enabled'
 
-  $restart_on_change = false
-
   $webserver = undef
 
   $vhost_path = undef

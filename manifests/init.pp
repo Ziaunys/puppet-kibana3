@@ -53,7 +53,6 @@ class kibana3(
     $package           = $kibana3::params::package,
     $proxy_port        = $kibana3::params::server_port,
     $webserver         = $kibana3::params::webserver,
-    $restart_on_change = $kibana3::params::restart_on_change,
     $status            = $kibana3::params::status,
     $vhost_path        = $kibana3::params::vhost_path,
     $version           = false,) inherits kibana3::params {
