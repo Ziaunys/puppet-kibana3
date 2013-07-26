@@ -1,7 +1,9 @@
 # == Class: kibana3
 #
 # Deploys Kibana 3 on a give node. It can optionally configure the node as a proxy
-# for Elastic Search or use an external.
+# for Elastic Search or use an external. The module makes some assumptions about deployment.
+# For instance, if the node is configured as a proxy, it assumes that an ES api is running on
+# localhost. This is stupid and will change eventually.
 #
 # === Parameters
 #
@@ -18,19 +20,6 @@
 #
 # Specify the hostname of the external Elastic Search proxy.
 # Values: ['kibana.myproxy.com']
-#
-#
-# Specify the
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
 #
 # === Examples
 #
@@ -52,12 +41,8 @@
 #
 # === Authors
 #
-# Author Name <eric.zounes@sysblogd.com>
-#
-# === Copyright
-#
-# Copyright 2013 Your name here, unless otherwise noted.
-#
+# Eric Zounes <eric.zounes@sysblogd.com>
+
 class kibana3(
     $autoupgrade       = $kibana3::params::autoupgrade,
     $approot           = $kibana3::params::approot,
