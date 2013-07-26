@@ -1,15 +1,26 @@
 # == Class: kibana3
 #
-# Full description of class kibana3 here.
+# Deploys Kibana 3 on a give node. It can optionally configure the node as a proxy
+# for Elastic Search or use an external.
 #
 # === Parameters
 #
-# Document parameters here.
+# Required:
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [webserver]
 #
+# Specify web server class to use for serving kibana.
+# Values: [node, nginx, apache] (Exclusive support for Apaache, atm)
+#
+# Optional:
+#
+# [es_vip]
+#
+# Specify the hostname of the external Elastic Search proxy.
+# Values: ['kibana.myproxy.com']
+#
+#
+# Specify the
 # === Variables
 #
 # Here you should define a list of variables that this module would require.
@@ -23,9 +34,21 @@
 #
 # === Examples
 #
-#  class { kibana3:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ]
+# External proxy:
+#
+#  class { 'kibana3':
+#          es_vip    => 'kibana.myproxy.com',
+#          webserver => 'apache',
 #  }
+#
+# As proxy:
+#
+#  class { 'kibana3':
+#           is_proxy    => true,
+#           webserver   => 'apache',
+#  }
+#
+#
 #
 # === Authors
 #
@@ -43,7 +66,6 @@ class kibana3(
     $es_port           = $kibana3::params::es_port,
     $is_proxy          = $kibana3::params::is_proxy,
     $package           = $kibana3::params::package,
-    $proxy_name        = $kibana3::params::proxy_name,
     $proxy_port        = $kibana3::params::server_port,
     $webserver         = $kibana3::params::webserver,
     $restart_on_change = $kibana3::params::restart_on_change,

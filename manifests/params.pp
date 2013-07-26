@@ -17,8 +17,6 @@ class kibana3::params {
   # determine whether the webserver is the ES proxy
   $is_proxy = false
 
-  $proxy_name = undef
-
   $proxy_port = 80
 
   $es_port = 9200
