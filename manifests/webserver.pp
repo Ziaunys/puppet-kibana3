@@ -9,7 +9,7 @@ class kibana3::webserver ($vhost_path) {
        }
     }
    if ($kibana3::webserver == 'apache') {
-        file { "${vhost_path}/bunker.kibana.mozilla.com.conf":
+        file { "${vhost_path}/${kibana3::es_vip}.conf":
         ensure  => file,
         owner   => root,
         group   => root,
