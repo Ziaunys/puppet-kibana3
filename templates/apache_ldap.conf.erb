@@ -3,7 +3,7 @@
 
 <VirtualHost *:<%= scope['kibana3::proxy_port'] %>>
 
-  ServerName <%= scope['::fqdn'] %>
+  ServerName <%= scope['kibana3::es_vip'] %>
 
   DocumentRoot <%= scope['kibana3::approot'] %>
 

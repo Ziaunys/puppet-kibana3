@@ -14,11 +14,9 @@
 # Specify web server class to use for serving kibana.
 # Values: [node, nginx, apache] (Exclusive support for Apaache, atm)
 #
-# Optional:
-#
 # [es_vip]
 #
-# Specify the hostname of the external Elastic Search proxy.
+# Specify the hostname of ES cluster.
 # Values: ['kibana.myproxy.com']
 #
 # === Examples
